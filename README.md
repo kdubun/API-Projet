@@ -10,7 +10,7 @@ Une base de données SQLite pour une installation simple
 ## Installation  
 ### Récupération du projet
 ```
-git clone https://github.com/<UTILISATEUR>/<REPO>.git
+git clone https://github.com/kdubun/API-Projet.git
 cd API-Projet
 composer install
 ```
