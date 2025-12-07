@@ -7,35 +7,35 @@ Un CRUD web classique : `/task`
 Une interface front consommant l’API : `/task/front`  
 Une base de données SQLite pour une installation simple
 
-##Installation  
-###Récupération du projet
+## Installation  
+### Récupération du projet
 ```
 git clone https://github.com/<UTILISATEUR>/<REPO>.git
 cd API-Projet
 composer install
 ```
 
-###Base de données
+### Base de données
 ```
 php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate -n
 ```
 
-###Lancement du serveur
+### Lancement du serveur
 ```
 symfony serve
 ```
 
-##Fonctionnalités
+## Fonctionnalités
 
-###CRUD Web  
+### CRUD Web  
 Liste : `/task`  
 Création : `/task/new`  
 Détail : `/task/{id}`  
 Modification : `/task/{id}/edit`  
 Suppression : POST `/task/{id}`  
 
-###API REST
+### API REST
 Endpoints :
 ```
 GET    /api/tasks
@@ -54,7 +54,7 @@ Exemple JSON :
 }
 ```
 
-###Interface Front  
+### Interface Front  
 Accessible à l’adresse : `/task/front`
 
 Fonctionnalités :  
@@ -63,12 +63,12 @@ Liste dynamique
 Mise à jour du statut  
 Suppression  
 
-##Tests rapides  
+## Tests rapides  
 CRUD web : accéder à `/task`  
 API : tester les 5 endpoints via Postman ou curl  
 Front : `/task/front` (ajout, mise à jour, suppression)  
 
-##Structure du projet
+## Structure du projet
 ```
 src/Controller/
   ApiTaskController.php
