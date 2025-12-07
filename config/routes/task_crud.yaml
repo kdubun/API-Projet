@@ -1,0 +1,35 @@
+app_task_index:
+  path: /task
+  controller: App\Controller\TaskController::index
+  methods: [GET]
+
+app_task_new:
+  path: /task/new
+  controller: App\Controller\TaskController::new
+  methods: [GET, POST]
+
+app_task_show:
+  path: /task/{id}
+  controller: App\Controller\TaskController::show
+  methods: [GET]
+  requirements:
+    id: '\d+'
+
+app_task_edit:
+  path: /task/{id}/edit
+  controller: App\Controller\TaskController::edit
+  methods: [GET, POST]
+  requirements:
+    id: '\d+'
+
+app_task_delete:
+  path: /task/{id}
+  controller: App\Controller\TaskController::delete
+  methods: [POST]
+  requirements:
+    id: '\d+'
+
+task_front:
+  path: /task/front
+  controller: App\Controller\TaskController::front
+  methods: [GET]

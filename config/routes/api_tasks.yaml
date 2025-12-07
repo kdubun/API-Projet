@@ -1,0 +1,24 @@
+api_tasks_index:
+    path: /api/tasks
+    controller: App\Controller\ApiTaskController::index
+    methods: [GET]
+
+api_tasks_create:
+    path: /api/tasks
+    controller: App\Controller\ApiTaskController::create
+    methods: [POST]
+
+api_tasks_show:
+    path: /api/tasks/{id}
+    controller: App\Controller\ApiTaskController::show
+    methods: [GET]
+
+api_tasks_update:
+    path: /api/tasks/{id}
+    controller: App\Controller\ApiTaskController::update
+    methods: [PUT]
+
+api_tasks_delete:
+    path: /api/tasks/{id}
+    controller: App\Controller\ApiTaskController::delete
+    methods: [DELETE]

@@ -1,0 +1,110 @@
+{# templates/task/front.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des tâches (Front){% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">Gestion des tâches</h1>
+
+    <div class="card mb-4">
+        <div class="card-header">Créer une tâche</div>
+        <div class="card-body">
+            <form id="task-form">
+                <div class="mb-3">
+                    <label class="form-label">Titre</label>
+                    <input type="text" id="title" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea id="description" class="form-control"></textarea>
+                </div>
+                <div class="form-check mb-3">
+                    <input type="checkbox" id="isDone" class="form-check-input">
+                    <label class="form-check-label" for="isDone">Terminée</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+            </form>
+        </div>
+    </div>
+
+    <h2 class="mb-3">Liste des tâches</h2>
+    <table class="table table-striped" id="tasks-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Terminée</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {# Lignes remplies en JS #}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const apiBase = '/api/tasks';
+
+    async function loadTasks() {
+        const res = await fetch(apiBase, {method: 'GET'});
+        const tasks = await res.json();
+        const tbody = document.querySelector('#tasks-table tbody');
+        tbody.innerHTML = '';
+
+        tasks.forEach(task => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${task.id}</td>
+                <td>${task.title}</td>
+                <td>${task.description ?? ''}</td>
+                <td>${task.isDone ? 'Oui' : 'Non'}</td>
+                <td>
+                    <button class="btn btn-sm btn-success me-2" onclick="toggleDone(${task.id}, ${task.isDone})">
+                        ${task.isDone ? 'Marquer non fait' : 'Marquer fait'}
+                    </button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteTask(${task.id})">
+                        Supprimer
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    async function createTask(event) {
+        event.preventDefault();
+        const title = document.getElementById('title').value;
+        const description = document.getElementById('description').value;
+        const isDone = document.getElementById('isDone').checked;
+
+        await fetch(apiBase, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ title, description, isDone })
+        });
+
+        document.getElementById('task-form').reset();
+        await loadTasks();
+    }
+
+    async function toggleDone(id, currentState) {
+        await fetch(`${apiBase}/${id}`, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ isDone: !currentState })
+        });
+        await loadTasks();
+    }
+
+    async function deleteTask(id) {
+        await fetch(`${apiBase}/${id}`, { method: 'DELETE' });
+        await loadTasks();
+    }
+
+    document.getElementById('task-form').addEventListener('submit', createTask);
+    loadTasks();
+</script>
+{% endblock %}

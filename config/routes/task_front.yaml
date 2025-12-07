@@ -1,0 +1,4 @@
+task_front:
+  path: /task/front
+  controller: App\Controller\TaskController::front
+  methods: [GET]
